@@ -9,21 +9,11 @@ app.use(express.static(join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-const { Game } = require('./models')
+app.use(require('./routes'))
 
-app.get('/games', (req, res) => {
-  Game.findAll({})
-    .then(games => res.json(games))
-    .catch(err => console.log(err))
-})
+async function init () {
+  await require('./config').sync()
+  app.listen(process.env.PORT || 3000)
+}
 
-app.post('/games', (req, res) => {
-  Game.create(req.body)
-    .then(game => res.json(game))
-    .catch(err => console.log(err))
-})
-
-require('./config')
-  .sync()
-  .then(() => app.listen(process.env.PORT || 3000))
-  .catch(err => console.log(err))
+init()
