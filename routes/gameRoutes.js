@@ -11,6 +11,11 @@ router.post('/games', async function ({ body }, res) {
   res.json(game)
 })
 
+router.put('/games/:id', async function ({ body, params: { id } }, res) {
+  await Game.update(body, { where: { id } })
+  res.sendStatus(200)
+})
+
 router.delete('/games/:id', async function ({ params: { id } }, res) {
   await Game.destroy({ where: { id } })
   res.sendStatus(200)

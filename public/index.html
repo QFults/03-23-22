@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    const Game = {
+      async getAll () {
+        const res = await fetch('/api/games')
+        return res.json()
+      },
+      async create (data) {
+        const res = await fetch('/api/games', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        return res.json()
+      },
+      async update (updates, id) {
+        await fetch(`/api/games/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updates)
+        })
+        return true
+      },
+      async delete (id) {
+        await fetch(`/api/games/${id}`, {
+          method: 'DELETE'
+        })
+        return true
+      }
+    }
+
+    // Game.getAll()
+    //   .then(games => {
+    //     console.log(games)
+    //   })
+    //   .catch(err => console.error(err))
+
+    // Game.create({
+    //   name: 'Dark Souls III',
+    //   category: 'Action Role-Playing',
+    //   year: 2016,
+    //   rating: 'Mature',
+    //   isMultiplayer: true
+    // })
+    //   .then(game => {
+    //     console.log(game)
+    //   })
+    //   .catch(err => console.error(err))
+
+    // Game.update({ isMultiplayer: true }, 6)
+    //   .then(() => {
+    //     console.log('Game updated!')
+    //   })
+    //   .catch(err => console.error(err))
+
+    // Game.delete(6)
+    //   .then(() => {
+    //     console.log('Game deleted!')
+    //   })
+    //   .catch(err => console.error(err))
+
+  </script>
+</body>
+</html>
